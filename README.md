@@ -1,6 +1,6 @@
 # AvaniGay
 
-hi avani, you are just so gay, :) 
+hi avani, you are just so gay :) 
 
 
 <div align="center">
@@ -9,4 +9,7 @@ hi avani, you are just so gay, :)
 
 
 here's something for when your website doesnt work
+
+
 thankyou
+(pls dont kill me im just a happy soul)
