@@ -3,9 +3,9 @@
 hi avani, you are just so gay, :) 
 
 
-
-[![Jump](https://img.shields.io/badge/INPUT-JUMP-brightgreen?style=for-the-badge)](https://github.com/<USER>/<REPO>/issues/new?title=dino%3Ajump&body=Press+Submit+to+execute+action)
-[![Duck](https://img.shields.io/badge/INPUT-DUCK-blue?style=for-the-badge)](https://github.com/<USER>/<REPO>/issues/new?title=dino%3Aduck&body=Press+Submit+to+execute+action)
+<div align="center">
+  <img src="./dino.svg" alt="T-Rex Runner Game" width="100%" />
+</div>
 
 
 here's something for when your website doesnt work
