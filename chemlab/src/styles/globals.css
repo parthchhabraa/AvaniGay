@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+@theme {
+  /* -- Type -- */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* -- Surface -- */
+  --color-paper: #faf9f5;
+  --color-paper-raised: #ffffff;
+  --color-paper-sunken: #f1efe8;
+  --color-bench: #e7e3d7;
+  --color-bench-dark: #37433f;
+
+  /* -- Ink -- */
+  --color-ink: #1a1f1c;
+  --color-ink-soft: #545e58;
+  --color-ink-faint: #8a9089;
+
+  /* -- Lines -- */
+  --color-line: #dedad0;
+  --color-line-strong: #c4bfb0;
+  --color-line-on-dark: #47544f;
+
+  /* -- Accent: deep laboratory teal -- */
+  --color-accent: #175c50;
+  --color-accent-strong: #103f37;
+  --color-accent-soft: #e2ede8;
+  --color-accent-soft-line: #bcd6cb;
+
+  /* -- Signal colours (never used alone to convey meaning) -- */
+  --color-positive: #2f7d4f;
+  --color-positive-soft: #e5f3e9;
+  --color-negative: #a5433a;
+  --color-negative-soft: #f6e7e4;
+  --color-caution: #a6721b;
+  --color-caution-soft: #f5ecd9;
+  --color-info: #2f5f8a;
+  --color-info-soft: #e6eef5;
+
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --radius-lg: 8px;
+
+  --shadow-flat: 0 1px 0 0 rgba(26, 31, 28, 0.06);
+  --shadow-panel: 0 1px 2px rgba(26, 31, 28, 0.06), 0 6px 20px -8px rgba(26, 31, 28, 0.12);
+  --shadow-pop: 0 4px 10px -2px rgba(26, 31, 28, 0.14), 0 12px 32px -12px rgba(26, 31, 28, 0.18);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-accent-soft-line);
+    color: var(--color-accent-strong);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  h1, h2, h3, h4 {
+    font-weight: 650;
+    letter-spacing: -0.012em;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line-strong);
+    border-radius: 999px;
+    border: 2px solid var(--color-paper);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .chem-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translate(-50%, 2px);
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-size: 12px;
+    line-height: 1.35;
+    padding: 6px 9px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    max-width: 240px;
+    white-space: normal;
+    width: max-content;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 120ms ease, transform 120ms ease;
+    z-index: 40;
+    box-shadow: var(--shadow-pop);
+  }
+  .chem-tooltip-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .chem-spinner {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    border: 2.5px solid var(--color-line-strong);
+    border-top-color: var(--color-accent);
+    animation: chem-spin 700ms linear infinite;
+  }
+  @keyframes chem-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .chem-modal-in {
+    animation: chem-modal-in 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes chem-modal-in {
+    from { opacity: 0; transform: translateY(6px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .chem-formula sub {
+    font-size: 0.72em;
+    vertical-align: -0.28em;
+  }
+  .chem-formula sup {
+    font-size: 0.68em;
+    vertical-align: 0.5em;
+  }
+}
