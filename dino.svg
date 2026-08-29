@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="100%" height="200">
+  <defs>
+    <style>
+      .bg { fill: #f7f7f7; }
+      .ground { stroke: #535353; stroke-width: 2; stroke-dasharray: 4 2; }
+      
+      /* Dino Jump Animation */
+      @keyframes jump {
+        0%, 100% { transform: translateY(0); }
+        45% { transform: translateY(-70px); }
+        55% { transform: translateY(-70px); }
+      }
+      
+      /* Cactus Scroll Animation */
+      @keyframes moveCactus {
+        0% { transform: translateX(850px); }
+        100% { transform: translateX(-50px); }
+      }
+      
+      /* Leg Running Toggle */
+      @keyframes runLegs {
+        0%, 50% { opacity: 1; }
+        50.01%, 100% { opacity: 0; }
+      }
+
+      .dino-group {
+        animation: jump 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        transform-origin: bottom;
+      }
+
+      .cactus-group {
+        animation: moveCactus 1.6s linear infinite;
+      }
+
+      .leg-1 { animation: runLegs 0.2s infinite; }
+      .leg-2 { animation: runLegs 0.2s infinite reverse; }
+      
+      .pixel { fill: #535353; }
+      .cloud { fill: #d3d3d3; }
+    </style>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="800" height="200" class="bg" rx="6" />
+
+  <!-- Scenery: Clouds -->
+  <path class="cloud" d="M150 50 h30 v10 h-30 z M160 40 h20 v10 h-20 z" />
+  <path class="cloud" d="M550 30 h40 v10 h-40 z M560 20 h20 v10 h-20 z" />
+
+  <!-- Ground Line -->
+  <line x1="0" y1="170" x2="800" y2="170" class="ground" />
+
+  <!-- Obstacle: Cactus -->
+  <g class="cactus-group">
+    <path class="pixel" d="M0 130 h10 v40 h-10 z M-6 140 h6 v15 h-6 z M10 144 h6 v12 h-6 z" />
+  </g>
+
+  <!-- Player: T-Rex -->
+  <g transform="translate(80, 126)">
+    <g class="dino-group">
+      <!-- Head & Body -->
+      <path class="pixel" d="M22 0 h18 v16 h-18 z" />
+      <path class="pixel" d="M20 16 h14 v10 h-14 z" />
+      <path class="pixel" d="M14 20 h6 v18 h-6 z" />
+      <path class="pixel" d="M8 26 h6 v12 h-6 z" />
+      <path class="pixel" d="M4 28 h4 v6 h-4 z" />
+      <!-- Eye -->
+      <rect x="25" y="3" width="3" height="3" fill="#f7f7f7" />
+      <!-- Snout/Mouth -->
+      <path class="pixel" d="M34 10 h6 v2 h-6 z" />
+      <!-- Arms -->
+      <path class="pixel" d="M30 26 h4 v3 h-4 z" />
+      <!-- Legs -->
+      <rect class="leg-1" x="14" y="38" width="3" height="6" fill="#535353" />
+      <rect class="leg-2" x="22" y="38" width="3" height="6" fill="#535353" />
+    </g>
+  </g>
+</svg>
