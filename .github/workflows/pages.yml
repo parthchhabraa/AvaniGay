@@ -1,0 +1,78 @@
+name: Deploy Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deployment at a time; let in-progress runs finish rather than
+# cancelling them mid-deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            casefile/package-lock.json
+            chemlab/package-lock.json
+
+      - name: Build CASEFILE
+        working-directory: casefile
+        env:
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/casefile/
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build ChemLab
+        working-directory: chemlab
+        env:
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/chemlab/
+        run: |
+          npm ci
+          npm run build
+
+      - name: Assemble Pages site
+        run: |
+          set -e
+          rm -rf pages-dist
+          mkdir -p pages-dist/casefile pages-dist/chemlab
+          cp -r site/. pages-dist/
+          cp -r casefile/dist/. pages-dist/casefile/
+          cp -r chemlab/dist/. pages-dist/chemlab/
+          find pages-dist -maxdepth 2
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: pages-dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
