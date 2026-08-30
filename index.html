@@ -87,8 +87,15 @@
       }
 
       .masthead {
-        padding: 28px 0 20px;
+        padding: 26px 0 18px;
         text-align: center;
+      }
+
+      .masthead-emblem {
+        margin: 0 auto 10px;
+        width: 40px;
+        height: 40px;
+        color: var(--ink);
       }
 
       .masthead h1 {
@@ -153,12 +160,51 @@
       }
 
       .story {
-        padding: 26px 28px 30px;
+        padding: 24px 28px 30px;
         border-bottom: 1px solid var(--rule);
       }
 
       .story:nth-child(odd) {
         border-right: 1px solid var(--rule);
+      }
+
+      .story-art {
+        width: 100%;
+        height: 132px;
+        border: 1px solid var(--rule);
+        background: var(--paper-raised);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        position: relative;
+      }
+
+      .story-art::before,
+      .story-art::after {
+        content: "";
+        position: absolute;
+        inset: 5px;
+        border: 1px solid var(--rule);
+        pointer-events: none;
+      }
+
+      .story-art svg {
+        width: 92px;
+        height: 92px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .story-art figcaption {
+        position: absolute;
+        bottom: 6px;
+        right: 10px;
+        font-family: var(--font-sans);
+        font-size: 9.5px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
       }
 
       .story-kicker {
@@ -311,6 +357,10 @@
     </div>
 
     <header class="masthead wrap">
+      <svg class="masthead-emblem" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="38" height="38" stroke="currentColor" stroke-width="1.4" />
+        <path d="M12 27V13l8 9 8-9v14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
       <h1>The Build Gazette</h1>
       <p>A front page for every project built here — each one live, working, and one click away.</p>
     </header>
@@ -339,6 +389,20 @@
           tags: ['Virtual Laboratory', '3D', 'Chemistry'],
           href: 'chemlab/',
           linkText: 'Enter the laboratory',
+          artCaption: 'Fig. 1 — Titration',
+          art: `
+            <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="50" y="9" width="20" height="8" rx="2" stroke="#1c1a15" stroke-width="2.2"/>
+              <path d="M52 17 V40 L28 86 Q26 92 32 92 H88 Q94 92 92 86 L68 40 V17" stroke="#1c1a15" stroke-width="2.2" stroke-linejoin="round"/>
+              <path d="M35 79 Q60 71 85 79 L88 86 Q90 91 85 91 H35 Q30 91 32 86 Z" fill="#7a1f1f" fill-opacity="0.16" stroke="#7a1f1f" stroke-width="2"/>
+              <circle cx="58" cy="59" r="3" stroke="#1c1a15" stroke-width="1.8"/>
+              <circle cx="69" cy="49" r="2" stroke="#1c1a15" stroke-width="1.8"/>
+              <circle cx="50" cy="45" r="2.2" stroke="#1c1a15" stroke-width="1.8"/>
+              <line x1="12" y1="100" x2="108" y2="100" stroke="#1c1a15" stroke-width="1.4"/>
+              <path d="M97 58 V88 Q97 94 102 94 Q107 94 107 88 V58" stroke="#1c1a15" stroke-width="1.8" stroke-linejoin="round"/>
+              <line x1="95" y1="58" x2="109" y2="58" stroke="#1c1a15" stroke-width="1.8"/>
+            </svg>
+          `,
         },
         {
           kicker: 'Fiction Desk',
@@ -349,6 +413,18 @@
           tags: ['Interactive Fiction', 'Mystery'],
           href: 'casefile/',
           linkText: 'Read the case file',
+          artCaption: 'Fig. 2 — Exhibit A',
+          art: `
+            <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g stroke="#1c1a15" stroke-width="1.5" stroke-linecap="round">
+                <path d="M40 38 a20 24 0 1 1 0 42"/>
+                <path d="M46 45 a14 17 0 1 1 0 28"/>
+                <path d="M52 52 a8 10 0 1 1 0 14"/>
+              </g>
+              <circle cx="58" cy="50" r="25" stroke="#7a1f1f" stroke-width="2.6"/>
+              <line x1="76" y1="68" x2="99" y2="91" stroke="#7a1f1f" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+          `,
         },
       ]
 
@@ -357,6 +433,10 @@
         const article = document.createElement('article')
         article.className = 'story'
         article.innerHTML = `
+          <figure class="story-art">
+            ${p.art}
+            <figcaption>${p.artCaption}</figcaption>
+          </figure>
           <div class="story-kicker">
             <span>${p.kicker}</span>
             <span class="story-index">No. ${String(i + 1).padStart(2, '0')}</span>
