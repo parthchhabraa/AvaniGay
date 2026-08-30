@@ -31,6 +31,7 @@ jobs:
           cache-dependency-path: |
             casefile/package-lock.json
             chemlab/package-lock.json
+            lastlight/package-lock.json
 
       - name: Build CASEFILE
         working-directory: casefile
@@ -48,14 +49,23 @@ jobs:
           npm ci
           npm run build
 
+      - name: Build The House of Last Light
+        working-directory: lastlight
+        env:
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/lastlight/
+        run: |
+          npm ci
+          npm run build
+
       - name: Assemble Pages site
         run: |
           set -e
           rm -rf pages-dist
-          mkdir -p pages-dist/casefile pages-dist/chemlab
+          mkdir -p pages-dist/casefile pages-dist/chemlab pages-dist/lastlight
           cp index.html favicon.svg .nojekyll pages-dist/
           cp -r casefile/dist/. pages-dist/casefile/
           cp -r chemlab/dist/. pages-dist/chemlab/
+          cp -r lastlight/dist/. pages-dist/lastlight/
           find pages-dist -maxdepth 2
 
       - name: Configure Pages
